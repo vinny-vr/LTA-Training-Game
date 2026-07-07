@@ -164,7 +164,7 @@ function resolveTraining(code, forced) {
   } else if (success) {
     summary += `Training succeeded for <span class="good">+${gain.toFixed(2)} stats</span>.`;
   } else if (statLoss) {
-    summary += `Training failed and Kleos lost <span class="bad">5% of her stats</span>.`;
+    summary += `Training failed and ${game.name} lost <span class="bad">5% of the current stats</span>.`;
   } else {
     summary += `Training failed, but she avoided the stat-loss penalty.`;
   }

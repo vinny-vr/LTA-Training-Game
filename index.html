@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LTA Training Minigame</title>
-  <link rel="stylesheet" href="training-minigame.css">
+  <link rel="stylesheet" href="training-minigame.css?v=3">
 </head>
 <body>
 <div class="wrap">
   <section id="setupScreen">
     <div class="panel">
       <h1>LTA Training Minigame</h1>
-      <p class="subtle">Your uma begins with 750 total stats. Each month generates a random training value from 75 to 180.</p>
+      <p class="subtle">Your uma always begins with 750 total stats and 100 energy. Each month generates a random training value from 75 to 180.</p>
 
       <div class="grid">
 
         <div>
           <label>Uma name</label>
-          <input id="setupName" type="text" value="John Umamusume" maxlength="40" placeholder="Enter uma name">
+          <input id="setupName" type="text" value="Your Uma" maxlength="40" placeholder="Enter uma name">
         </div>
 
         
@@ -25,7 +25,7 @@
         
         <div>
           <label>Campaign length</label>
-          <input id="setupMonths" type="number" value="21" min="1" max="120">
+          <input id="setupMonths" type="number" value="12" min="1" max="120">
         </div>
       </div>
 
@@ -404,6 +404,6 @@ function returnToSetup() {
   document.getElementById("log").innerHTML = "";
 }
 </script>
-  <script src="training-minigame.js"></script>
+  <script src="training-minigame.js?v=3"></script>
 </body>
 </html>
