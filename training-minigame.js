@@ -24,6 +24,38 @@ function tierForEnergy(energy) {
   return {name:"Yikes", successDie:6, injuryDie:4, injuryFails:[1,2,3]};
 }
 
+function failureChanceForTier(tier) {
+  return tier.successDie ? 1 / tier.successDie : 0;
+}
+
+function injuryChanceForTier(tier) {
+  if (!tier.injuryDie) return 0;
+  return tier.injuryFails.length / tier.injuryDie;
+}
+
+function formatChance(value) {
+  const percent = value * 100;
+  return Number.isInteger(percent) ? `${percent}%` : `${percent.toFixed(1)}%`;
+}
+
+function updateTrainingOptions() {
+  ["H", "M", "L", "W"].forEach(code => {
+    const action = training[code];
+    const resultingEnergy = clamp(game.energy - action.energyCost, 0, 100);
+    const tier = tierForEnergy(resultingEnergy);
+    const gain = Math.ceil(game.monthBaseValue * action.gainMult);
+    const failureChance = formatChance(failureChanceForTier(tier));
+    const injuryChance = formatChance(injuryChanceForTier(tier));
+
+    document.getElementById(`details${code}`).innerHTML =
+      `+${gain} stats<br>−${action.energyCost} energy → ${resultingEnergy}%<br>` +
+      `Failure: ${failureChance} · Injury: ${injuryChance}`;
+  });
+
+  document.getElementById("detailsR").innerHTML =
+    `Restore to 100% energy<br>No stat gain<br>Failure: 0% · Injury: 0%`;
+}
+
 
 
 function startGame() {
@@ -118,8 +150,8 @@ function resolveTraining(code, forced) {
     }
 
     if (success) {
-      gain = game.monthBaseValue * action.gainMult;
-      game.stats += gain;
+      gain = Math.ceil(game.monthBaseValue * action.gainMult);
+      game.stats = Math.ceil(game.stats + gain);
     } else {
       game.failures++;
       const lossRoll = rollDie(2);
@@ -131,7 +163,7 @@ function resolveTraining(code, forced) {
         statLoss ? "bad" : "good"
       );
       if (statLoss) {
-        game.stats *= 0.95;
+        game.stats = Math.ceil(game.stats * 0.95);
         game.statLosses++;
       }
     }
@@ -162,7 +194,7 @@ function resolveTraining(code, forced) {
   if (code === "R") {
     summary += forced ? `${game.name} recovered from the injury.` : `${game.name} rested.`;
   } else if (success) {
-    summary += `Training succeeded for <span class="good">+${gain.toFixed(2)} stats</span>.`;
+    summary += `Training succeeded for <span class="good">+${gain} stats</span>.`;
   } else if (statLoss) {
     summary += `Training failed and ${game.name} lost <span class="bad">5% of the current stats</span>.`;
   } else {
@@ -175,7 +207,7 @@ function resolveTraining(code, forced) {
 
   addLog(summary, success ? (injured ? "warn-entry" : "good-entry") : "bad-entry");
   document.getElementById("statusMessage").innerHTML =
-    `Month ${game.month} resolved. Stat change: <strong class="${change >= 0 ? "good" : "bad"}">${change >= 0 ? "+" : ""}${change.toFixed(2)}</strong>.`;
+    `Month ${game.month} resolved. Stat change: <strong class="${change >= 0 ? "good" : "bad"}">${change >= 0 ? "+" : ""}${Math.ceil(change)}</strong>.`;
 
   updateHUD();
 
@@ -213,10 +245,11 @@ function updateHUD() {
   document.getElementById("monthNow").textContent = game.month;
   document.getElementById("umaNameNow").textContent = game.name;
   document.getElementById("monthMax").textContent = game.maxMonths;
-  document.getElementById("statsNow").textContent = game.stats.toFixed(2);
+  document.getElementById("statsNow").textContent = Math.ceil(game.stats);
   document.getElementById("energyNow").textContent = game.energy + "%";
   document.getElementById("trainingValueNow").textContent = game.monthBaseValue;
   document.getElementById("energyFill").style.width = game.energy + "%";
+  updateTrainingOptions();
 }
 
 function addLog(message, cls="") {
@@ -238,9 +271,9 @@ function endGame() {
   document.getElementById("endScreen").classList.remove("hidden");
 
   document.getElementById("endTitle").textContent = `${game.name}'s Training Complete`;
-  document.getElementById("finalStats").textContent = game.stats.toFixed(2);
+  document.getElementById("finalStats").textContent = Math.ceil(game.stats);
   const gain = game.stats - game.startingStats;
-  document.getElementById("finalGain").textContent = `${gain >= 0 ? "+" : ""}${gain.toFixed(2)}`;
+  document.getElementById("finalGain").textContent = `${gain >= 0 ? "+" : ""}${Math.ceil(gain)}`;
   document.getElementById("finalFails").textContent = game.failures;
   document.getElementById("finalInjuries").textContent = game.injuries;
 

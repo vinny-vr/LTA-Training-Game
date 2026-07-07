@@ -11,7 +11,7 @@
   <section id="setupScreen">
     <div class="panel">
       <h1>LTA Training Minigame</h1>
-      <p class="subtle">Your uma begins with 750 total stats. Each month generates a random training value from 75 to 180.</p>
+      <p class="subtle">Your uma always begins with 750 total stats and 100 energy. Each month generates a random training value from 75 to 180.</p>
 
       <div class="grid">
 
@@ -72,23 +72,23 @@
       <div class="actions">
         <button class="action-btn" onclick="chooseTraining('H')">
           <strong>High</strong>
-          <span>100% gain<br>−30 energy</span>
+          <span id="detailsH">Loading...</span>
         </button>
         <button class="action-btn" onclick="chooseTraining('M')">
           <strong>Medium</strong>
-          <span>75% gain<br>−20 energy</span>
+          <span id="detailsM">Loading...</span>
         </button>
         <button class="action-btn" onclick="chooseTraining('L')">
           <strong>Low</strong>
-          <span>50% gain<br>−10 energy</span>
+          <span id="detailsL">Loading...</span>
         </button>
         <button class="action-btn" onclick="chooseTraining('W')">
           <strong>Warmups</strong>
-          <span>25% gain<br>No energy loss</span>
+          <span id="detailsW">Loading...</span>
         </button>
         <button class="action-btn" onclick="chooseTraining('R')">
           <strong>Rest</strong>
-          <span>No gain<br>Restore to 100%</span>
+          <span id="detailsR">Restore to 100% energy<br>No failure or injury risk</span>
         </button>
       </div>
     </div>
