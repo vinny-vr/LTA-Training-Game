@@ -28,7 +28,9 @@ function tierForEnergy(energy) {
 
 function startGame() {
   const startStats = 750;
+  const enteredName = document.getElementById("setupName").value.trim();
   game = {
+    name: enteredName || "Your Uma",
     startingStats: startStats,
     stats: startStats,
     energy: 100,
@@ -57,12 +59,12 @@ function beginMonth() {
 
   if (game.forcedRest) {
     document.getElementById("statusMessage").innerHTML =
-      `<span class="bad"><strong>Kleos is injured.</strong></span> This month is automatically spent resting.`;
+      `<span class="bad"><strong>${game.name} is injured.</strong></span> This month is automatically spent resting.`;
     document.getElementById("actionPanel").classList.add("hidden");
     setTimeout(() => resolveTraining("R", true), 250);
   } else {
     document.getElementById("statusMessage").innerHTML =
-      `This month's base training value is <strong class="accent">${game.monthBaseValue}</strong>. Choose Kleos' training.`;
+      `This month's training value is <strong class="accent">${game.monthBaseValue}</strong>. Choose ${game.name}'s training.`;
   }
 
   updateHUD();
@@ -153,12 +155,12 @@ function resolveTraining(code, forced) {
   }
 
   const change = game.stats - startStats;
-  let summary = `<strong>${action.name}</strong> with base value <strong>${game.monthBaseValue}</strong>: ${startEnergy}% → ${game.energy}% energy`;
+  let summary = `<strong>${action.name}</strong> with training value <strong>${game.monthBaseValue}</strong>: ${startEnergy}% → ${game.energy}% energy`;
   if (code !== "R") summary += `, tier: <strong>${tier.name}</strong>`;
   summary += `. `;
 
   if (code === "R") {
-    summary += forced ? "Kleos recovered from her injury." : "Kleos rested.";
+    summary += forced ? `${game.name} recovered from the injury.` : `${game.name} rested.`;
   } else if (success) {
     summary += `Training succeeded for <span class="good">+${gain.toFixed(2)} stats</span>.`;
   } else if (statLoss) {
@@ -168,7 +170,7 @@ function resolveTraining(code, forced) {
   }
 
   if (injured) {
-    summary += ` <span class="bad">She is injured and must rest next month.</span>`;
+    summary += ` <span class="bad">${game.name} is injured and must rest next month.</span>`;
   }
 
   addLog(summary, success ? (injured ? "warn-entry" : "good-entry") : "bad-entry");
@@ -234,6 +236,7 @@ function endGame() {
   document.getElementById("gameScreen").classList.add("hidden");
   document.getElementById("endScreen").classList.remove("hidden");
 
+  document.getElementById("endTitle").textContent = `${game.name}'s Training Complete`;
   document.getElementById("finalStats").textContent = game.stats.toFixed(2);
   const gain = game.stats - game.startingStats;
   document.getElementById("finalGain").textContent = `${gain >= 0 ? "+" : ""}${gain.toFixed(2)}`;
