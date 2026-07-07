@@ -211,6 +211,7 @@ function nextMonth() {
 
 function updateHUD() {
   document.getElementById("monthNow").textContent = game.month;
+  document.getElementById("umaNameNow").textContent = game.name;
   document.getElementById("monthMax").textContent = game.maxMonths;
   document.getElementById("statsNow").textContent = game.stats.toFixed(2);
   document.getElementById("energyNow").textContent = game.energy + "%";
