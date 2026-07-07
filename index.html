@@ -11,9 +11,15 @@
   <section id="setupScreen">
     <div class="panel">
       <h1>LTA Training Minigame</h1>
-      <p class="subtle">Kleos always begins with 750 total stats and 100 energy. Each month generates a random base training value from 75 to 180.</p>
+      <p class="subtle">Your uma always begins with 750 total stats and 100 energy. Each month generates a random training value from 75 to 180.</p>
 
       <div class="grid">
+
+        <div>
+          <label>Uma name</label>
+          <input id="setupName" type="text" value="Your Uma" maxlength="40" placeholder="Enter uma name">
+        </div>
+
         
         
         
@@ -43,7 +49,7 @@
           <div class="value" id="energyNow">100%</div>
         </div>
         <div class="stat">
-          <div class="label">This Month's Base Value</div>
+          <div class="label">This Month's Training Value</div>
           <div class="value accent" id="trainingValueNow">—</div>
         </div>
       </div>
@@ -104,7 +110,7 @@
 
   <section id="endScreen" class="hidden">
     <div class="panel">
-      <h1>Training Complete</h1>
+      <h1 id="endTitle">Training Complete</h1>
       <div class="grid">
         <div class="stat">
           <div class="label">Final Stats</div>
@@ -197,7 +203,7 @@ function beginMonth() {
     setTimeout(() => resolveTraining("R", true), 250);
   } else {
     document.getElementById("statusMessage").innerHTML =
-      `This month's base training value is <strong class="accent">${game.monthBaseValue}</strong>. Choose Kleos' training.`;
+      `This month's training value is <strong class="accent">${game.monthBaseValue}</strong>. Choose Kleos' training.`;
   }
 
   updateHUD();
