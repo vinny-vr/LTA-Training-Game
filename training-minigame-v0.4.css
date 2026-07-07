@@ -36,6 +36,13 @@
 
   .subtle { color: var(--muted); }
 
+  .author-note {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
   .panel {
     background: rgba(26,29,36,.96);
     border: 1px solid var(--border);
