@@ -11,18 +11,22 @@
   <section id="setupScreen">
     <div class="panel">
       <h1>LTA Training Minigame</h1>
-      <p class="subtle">Your uma always begins with 750 total stats and 100 energy. Choose the minimum and maximum possible training value before starting.</p>
+      <p class="subtle">Your uma begins with 750 total stats. Choose the minimum and maximum possible training value before starting. Recommended values were already entered for you. :)</p>
 
       <div class="grid">
 
         <div>
           <label>Uma name</label>
-          <input id="setupName" type="text" value="Your Uma" maxlength="40" placeholder="Enter uma name">
+          <input id="setupName" type="text" value="John Umamusume" maxlength="40" placeholder="Enter uma name">
         </div>
 
         
         
         
+        <div>
+          <label>Campaign length</label>
+          <input id="setupMonths" type="number" value="21" min="1" max="120">
+        </div>
         <div>
           <label>Minimum training value</label>
           <input id="setupMinValue" type="number" value="75" min="1" step="1">
@@ -30,10 +34,6 @@
         <div>
           <label>Maximum training value</label>
           <input id="setupMaxValue" type="number" value="180" min="1" step="1">
-        </div>
-        <div>
-          <label>Campaign length</label>
-          <input id="setupMonths" type="number" value="12" min="1" max="120">
         </div>
       </div>
 
